@@ -1,14 +1,14 @@
 services:
-shopify-oauth:
-build: .
-restart: unless-stopped
-environment:
-SHOPIFY_PORT: "3001"
-SHOPIFY_APP_URL: "https://support.flexanow.com"
-SHOPIFY_REDIRECT_PATH: "/auth/callback"
-SHOPIFY_DEFAULT_SHOP: "eifsnu-8e.myshopify.com"
-SHOPIFY_SCOPES: "read_orders,write_orders,read_customers,read_fulfillments"
-SHOPIFY_CLIENT_ID: "CHANGE_ME"
-SHOPIFY_CLIENT_SECRET: "CHANGE_ME"
-ports:
-- "3001:3001"
+  shopify-oauth:
+    build: https://github.com/ddm49/shopify-oauth.git#main
+    restart: unless-stopped
+    environment:
+      SHOPIFY_PORT: "3001"
+      SHOPIFY_APP_URL: "https://support.flexanow.com"
+      SHOPIFY_REDIRECT_PATH: "/auth/callback"
+      SHOPIFY_DEFAULT_SHOP: "eifsnu-8e.myshopify.com"
+      SHOPIFY_SCOPES: "read_orders,write_orders,read_customers,read_fulfillments"
+      SHOPIFY_CLIENT_ID: "YOUR_CLIENT_ID"
+      SHOPIFY_CLIENT_SECRET: "YOUR_CLIENT_SECRET"
+    ports:
+      - "3001:3001"
