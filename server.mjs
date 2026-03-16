@@ -190,11 +190,24 @@ function simplifyOrders(edges) {
     customerName: node.customer
       ? `${node.customer.firstName || ""} ${node.customer.lastName || ""}`.trim()
       : null,
+    shippingAddress: node.shippingAddress
+      ? {
+          name: node.shippingAddress.name || "",
+          address1: node.shippingAddress.address1 || "",
+          address2: node.shippingAddress.address2 || "",
+          city: node.shippingAddress.city || "",
+          zip: node.shippingAddress.zip || "",
+          provinceCode: node.shippingAddress.provinceCode || "",
+          countryCode: node.shippingAddress.countryCodeV2 || "",
+          phone: node.shippingAddress.phone || "",
+        }
+      : null,
     lineItems: (node.lineItems?.edges || []).map(({ node: li }) => ({
-      title: li.title,
-      variantTitle: li.variantTitle,
-      quantity: li.quantity,
-      sku: li.sku,
+      title: li.title || "",
+      variantTitle: li.variantTitle || "",
+      quantity: li.quantity || 0,
+      sku: li.sku || "",
+      customAttributes: li.customAttributes || [],
     })),
   }));
 }
@@ -215,13 +228,27 @@ async function findOrdersByQuery(searchQuery) {
               firstName
               lastName
             }
-            lineItems(first: 20) {
+            shippingAddress {
+              name
+              address1
+              address2
+              city
+              zip
+              provinceCode
+              countryCodeV2
+              phone
+            }
+            lineItems(first: 50) {
               edges {
                 node {
                   title
                   variantTitle
                   quantity
                   sku
+                  customAttributes {
+                    key
+                    value
+                  }
                 }
               }
             }
